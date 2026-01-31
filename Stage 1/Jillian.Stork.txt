@@ -1,0 +1,3 @@
+Jillian Stork's Classes will be 
+Attendee.class and
+Speaker.class
