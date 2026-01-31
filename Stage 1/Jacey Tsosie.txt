@@ -1,0 +1,11 @@
+Jacey Tsosie 
+
+-Staff
+-StaffManager 
+-StaffManagerGUI
+-Trainer
+-TrainerManager 
+-TrainerGUI
+-FitnessClass
+-FitnessClassManager
+-FitnessClassGUI
