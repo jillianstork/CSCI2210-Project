@@ -1,0 +1,5 @@
+Maya's selected classes:
+
+- Conference
+
+- Organizer
