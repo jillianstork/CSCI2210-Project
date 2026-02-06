@@ -3,6 +3,3 @@ Selected classes from required set:
 - Conference
 - Organizer
 
-Selected additional entity:
-
-- Equipment
