@@ -1,0 +1,6 @@
+Jillian Stork
+Created UML Diagram and added Classes
+-Speaker
+-Attendee
+-Person
+-Registration
