@@ -1,1 +1,7 @@
-...
+Maya Garcia Schafer
+-------------------------
+Created UML diagrams for:
+-------------------------
+- conference
+- venue
+- organizer
