@@ -1,0 +1,128 @@
+/**
+ * Class description.
+ * @author Maya L. Garcia Schafer
+ * Created on 04/09/2026
+ */
+
+public class Room {
+    
+    private int roomId;
+    private String name;
+    private int capacity;
+    private Venue location;
+    private boolean hasProjector;
+    private int numberOfComputers;
+
+    /**
+     * Constructor method to initialize all private variables.
+     * @param roomId int the room's id number
+     * @param name String the name of the room
+     * @param capacity int number of people room can hold
+     * @param location Venue the venue of the room
+     * @param hasProjector boolean true if room has projector,
+     * false otherwise
+     * @param numberOfComputers int the number of computers in room
+     */
+    public Room(int roomId, String name, int capacity,
+        Venue location, boolean hasProjector, int numberOfComputers) {
+        this.roomId = roomId;
+        this.name = name;
+        this.capacity = capacity;
+        this.location = location;
+        this.hasProjector = hasProjector;
+        this.numberOfComputers = numberOfComputers;
+    }
+
+    /**
+     * Gets the room id.
+     * @return roomId int the room's id
+     */
+    public int getRoomId() {
+        return roomId;
+    }
+
+    /**
+     * Gets the name of the room.
+     * @return name String the name of the room
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Gets the room's capacity.
+     * @return capacity int the room's capacity
+     */
+    public int getCapacity() {
+        return capacity;
+    }
+
+    /**
+     * Gets the venue (location) of the room.
+     * @return location String the venue the room is in
+     */
+    public String getLocation() {
+        return location.getName();
+    }
+
+    /**
+     * Returns whether or not the room has a projector.
+     * @return hasProjector boolean true if the room has
+     * a projector, false otherwise
+     */
+    public boolean getHasProjector() {
+        return hasProjector;
+    }
+
+    /**
+     * Gets the number of computers in the room.
+     * @return numberOfComputers int the number of computers
+     * in the room.
+     */
+    public int getNumberOfComputers() {
+        return numberOfComputers;
+    }
+
+    /**
+     * Sets the room id.
+     * @param roomId int the room's id
+     */
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+    /**
+     * Sets the room name.
+     * @param name String the name of the room
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Sets the room's capacity.
+     * @param capacity int the capacity of the room
+     */
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    /**
+     * Sets whether or not the room has a projector.
+     * @param hasProjector boolean true if the room
+     * has a projector, false otherwise
+     */
+    public void setHasProjector(boolean hasProjector) {
+        this.hasProjector = hasProjector;
+    }
+
+    /**
+     * Sets the number of computers in the room.
+     * @param numberOfComputers int the number of
+     * computers in the room
+     */
+    public void setNumberOfComputers(int numberOfComputers) {
+        this.numberOfComputers = numberOfComputers;
+    }
+
+}
