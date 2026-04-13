@@ -1,0 +1,4 @@
+Jillian Stork 
+Stage 3 Contributions 
+
+Development of Registration, Person, Attendee, Speaker, and Main classes
