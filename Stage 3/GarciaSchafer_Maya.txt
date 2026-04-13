@@ -2,3 +2,4 @@ Stage 3 Contributions:
 
 Development of all classes except for Registration, Speaker, Attendee, and Main
 Updating UML to reflect Stage 3
+Create user guide
