@@ -33,6 +33,7 @@ public class Main {
             JButton roomsBtn = new JButton("Rooms");
             JButton speakersBtn = new JButton("Speakers");
             JButton attendeesBtn = new JButton("Attendees");
+            JButton organizersBtn = new JButton("Organizers");
             JButton exitBtn = new JButton("Exit");
 
             panel.add(Box.createVerticalStrut(20));
@@ -45,6 +46,7 @@ public class Main {
             panel.add(roomsBtn);
             panel.add(speakersBtn);
             panel.add(attendeesBtn);
+            panel.add(organizersBtn);
 
             panel.add(Box.createVerticalStrut(20));
             panel.add(exitBtn);
@@ -60,6 +62,7 @@ public class Main {
             roomsBtn.addActionListener(e -> openWindow("Rooms", new RoomPanel()));
             speakersBtn.addActionListener(e -> openWindow("Speakers", new SpeakerPanel()));
             attendeesBtn.addActionListener(e -> openWindow("Attendees", new AttendeePanel()));
+            organizersBtn.addActionListener(e -> openWindow("Organizers", new OrganizerPanel()));
 
             exitBtn.addActionListener(e -> System.exit(0));
         });
