@@ -209,4 +209,8 @@ public class OrganizerManager {
         }
         return null;
     }
+    
+    public static ArrayList<Organizer> getAll() {
+        return organizers;
+    }
 }
