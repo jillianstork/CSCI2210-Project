@@ -1,0 +1,158 @@
+/**
+ * @author Jillian Stork
+ * CSCI 2210 Project
+ * Conference Management System
+ * Organizer Panel Class
+ * This is the class for the organizer GUI
+ */
+import javax.swing.*;
+
+public class OrganizerPanel extends BasePanel {
+
+    public OrganizerPanel() {
+        super(new String[]{"ID","Name","Email","Phone","Organization","Job Title"});
+    }
+
+    // READ
+    @Override
+    protected void refreshTable() {
+        tableModel.setRowCount(0);
+
+        for (Organizer o : OrganizerManager.getAll()) {
+            tableModel.addRow(new Object[]{
+                o.getOrganizerId(),
+                o.getName(),
+                o.getEmail(),
+                o.getPhoneNumber(),
+                o.getOrganization(),
+                o.getJobTitle()
+            });
+        }
+    }
+
+    // SEARCH
+    @Override
+    protected void doSearch(String q) {
+        tableModel.setRowCount(0);
+
+        for (Organizer o : OrganizerManager.getAll()) {
+            if (String.valueOf(o.getOrganizerId()).contains(q)
+                || o.getName().toLowerCase().contains(q)
+                || o.getEmail().toLowerCase().contains(q)
+                || o.getOrganization().toLowerCase().contains(q)) {
+
+                tableModel.addRow(new Object[]{
+                    o.getOrganizerId(),
+                    o.getName(),
+                    o.getEmail(),
+                    o.getPhoneNumber(),
+                    o.getOrganization(),
+                    o.getJobTitle()
+                });
+            }
+        }
+    }
+
+    // CREATE
+    @Override
+    protected void doAdd() {
+
+        PersonFormHelper form = new PersonFormHelper();
+
+        int result = JOptionPane.showConfirmDialog(
+            this,
+            form.getFields(),
+            "Add Organizer",
+            JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (result == JOptionPane.OK_OPTION) {
+
+            if (form.nameF.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Name required.");
+                return;
+            }
+
+            OrganizerManager.addOrganizer(
+                form.nameF.getText().trim(),
+                form.emailF.getText().trim(),
+                form.phoneF.getText().trim(),
+                form.addressF.getText().trim(),
+                form.bioF.getText().trim(),
+                form.orgF.getText().trim(),
+                form.jobF.getText().trim()
+            );
+
+            refreshTable();
+        }
+    }
+
+    // UPDATE
+    @Override
+    protected void doEdit() {
+
+        int row = getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "Select an organizer.");
+            return;
+        }
+
+        int id = (int) tableModel.getValueAt(row, 0);
+        Organizer o = OrganizerManager.getOrganizerByID(id);
+        if (o == null) return;
+
+        PersonFormHelper form = new PersonFormHelper(
+            o.getName(), o.getEmail(), o.getPhoneNumber(),
+            o.getAddress(), o.getBiography(),
+            o.getOrganization(), o.getJobTitle()
+        );
+
+        int result = JOptionPane.showConfirmDialog(
+            this,
+            form.getFields(),
+            "Edit Organizer",
+            JOptionPane.OK_CANCEL_OPTION
+        );
+
+        if (result == JOptionPane.OK_OPTION) {
+
+            o.setName(form.nameF.getText().trim());
+            o.setEmail(form.emailF.getText().trim());
+            o.setPhoneNumber(form.phoneF.getText().trim());
+            o.setAddress(form.addressF.getText().trim());
+            o.setBiography(form.bioF.getText().trim());
+            o.setOrganization(form.orgF.getText().trim());
+            o.setJobTitle(form.jobF.getText().trim());
+
+            refreshTable();
+        }
+    }
+
+    // DELETE
+    @Override
+    protected void doDelete() {
+
+        int row = getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "Select an organizer.");
+            return;
+        }
+
+        int id = (int) tableModel.getValueAt(row, 0);
+
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Delete organizer ID " + id + "?",
+            "Confirm",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            Organizer o = OrganizerManager.getOrganizerByID(id);
+            if (o != null) {
+                OrganizerManager.getAll().remove(o);
+            }
+            refreshTable();
+        }
+    }
+}
