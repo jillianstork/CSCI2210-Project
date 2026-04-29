@@ -1,5 +1,5 @@
 /**
- * @author Jillian Stork
+ * @author Maya L. Garcia Schafer
  * CSCI 2210 Project
  * Conference Management System
  * Organizer Panel Class
