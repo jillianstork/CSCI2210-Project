@@ -32,24 +32,69 @@ public class SpeakerPanel extends BasePanel {
 
     // SEARCH
     @Override
-    protected void doSearch(String q) {
+    protected void doSearch() {
+        
+        if(SpeakerManager.getAll().isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "There are no speakers to search for.",
+                "No Speakers in Catalog",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        
+        JTextField searchF = new JTextField();
+        
+        int res = JOptionPane.showConfirmDialog(
+            this,
+            new Object[] {"Searching for:", searchF},
+            "Search Speakers",
+            JOptionPane.OK_CANCEL_OPTION
+        );
+        
+        if (res != JOptionPane.OK_OPTION) {
+            return;
+        }
+        
         tableModel.setRowCount(0);
+        
+        String s = searchF.getText().trim().toLowerCase();
+        
+        if (s.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Please enter a speaker feature to search by.",
+                "Invalid Search",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
 
-        for (Speaker s : SpeakerManager.getAll()) {
-            if (String.valueOf(s.getSpeakerID()).contains(q)
-                || s.getName().toLowerCase().contains(q)
-                || s.getEmail().toLowerCase().contains(q)
-                || s.getOrganization().toLowerCase().contains(q)) {
+        for (Speaker x : SpeakerManager.getAll()) {
+            if (String.valueOf(x.getSpeakerID()).contains(s)
+                || x.getName().toLowerCase().contains(s)
+                || x.getEmail().toLowerCase().contains(s)
+                || x.getOrganization().toLowerCase().contains(s)) {
 
                 tableModel.addRow(new Object[]{
-                    s.getSpeakerID(),
-                    s.getName(),
-                    s.getEmail(),
-                    s.getPhoneNumber(),
-                    s.getOrganization(),
-                    s.getJobTitle()
+                    x.getSpeakerID(),
+                    x.getName(),
+                    x.getEmail(),
+                    x.getPhoneNumber(),
+                    x.getOrganization(),
+                    x.getJobTitle()
                 });
             }
+        }
+        
+        if (tableModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "No speakers matched your search.",
+                "No Results",
+                JOptionPane.INFORMATION_MESSAGE
+            );
         }
     }
 

@@ -32,24 +32,69 @@ public class OrganizerPanel extends BasePanel {
 
     // SEARCH
     @Override
-    protected void doSearch(String q) {
+    protected void doSearch() {
+        
+        if(OrganizerManager.getAll().isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "There are no organizers to search for.",
+                "No Organizers in Catalog",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        
+        JTextField searchF = new JTextField();
+        
+        int res = JOptionPane.showConfirmDialog(
+            this,
+            new Object[] {"Searching for:", searchF},
+            "Search Organizers",
+            JOptionPane.OK_CANCEL_OPTION
+        );
+        
+        if (res != JOptionPane.OK_OPTION) {
+            return;
+        }
+        
         tableModel.setRowCount(0);
+        
+        String s = searchF.getText().trim().toLowerCase();
+        
+        if (s.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Please enter an organizer feature to search by.",
+                "Invalid Search",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
 
-        for (Organizer o : OrganizerManager.getAll()) {
-            if (String.valueOf(o.getOrganizerId()).contains(q)
-                || o.getName().toLowerCase().contains(q)
-                || o.getEmail().toLowerCase().contains(q)
-                || o.getOrganization().toLowerCase().contains(q)) {
+        for (Organizer x : OrganizerManager.getAll()) {
+            if (String.valueOf(x.getOrganizerId()).contains(s)
+                || x.getName().toLowerCase().contains(s)
+                || x.getEmail().toLowerCase().contains(s)
+                || x.getOrganization().toLowerCase().contains(s)) {
 
                 tableModel.addRow(new Object[]{
-                    o.getOrganizerId(),
-                    o.getName(),
-                    o.getEmail(),
-                    o.getPhoneNumber(),
-                    o.getOrganization(),
-                    o.getJobTitle()
+                    x.getOrganizerId(),
+                    x.getName(),
+                    x.getEmail(),
+                    x.getPhoneNumber(),
+                    x.getOrganization(),
+                    x.getJobTitle()
                 });
             }
+        }
+        
+        if (tableModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "No organizers matched your search.",
+                "No Results",
+                JOptionPane.INFORMATION_MESSAGE
+            );
         }
     }
 
