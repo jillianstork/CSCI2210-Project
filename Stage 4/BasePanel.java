@@ -30,12 +30,14 @@ public abstract class BasePanel extends JPanel {
         JButton editBtn = new JButton("Edit");
         JButton deleteBtn = new JButton("Delete");
         JButton searchBtn = new JButton("Search");
+        JButton resetBtn = new JButton("Reset");
 
         JPanel bottom = new JPanel();
         bottom.add(addBtn);
         bottom.add(editBtn);
         bottom.add(deleteBtn);
         bottom.add(searchBtn);
+        bottom.add(resetBtn);
 
         add(bottom, BorderLayout.SOUTH);
 
@@ -57,6 +59,10 @@ public abstract class BasePanel extends JPanel {
         
         searchBtn.addActionListener (e -> {
             doSearch();
+        });
+        
+        resetBtn.addActionListener (e -> {
+            refreshTable();
         });
 
         //auto-load data
