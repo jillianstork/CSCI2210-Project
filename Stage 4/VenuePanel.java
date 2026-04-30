@@ -31,18 +31,63 @@ public class VenuePanel extends BasePanel {
     }
 
     @Override
-    protected void doSearch(String query) {
+    protected void doSearch() {  
+        
+        if (VenueManager.getAll().isEmpty()) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "There are no venues to search for.",
+                    "No Venues in Catalog",
+                    JOptionPane.WARNING_MESSAGE   
+                );
+                return;
+        }
+        
+        JTextField searchF = new JTextField();
+        
+        int res = JOptionPane.showConfirmDialog(
+            this,
+            new Object[] { "Searching for:", searchF},
+            "Search Venues",
+            JOptionPane.OK_CANCEL_OPTION
+        );
+        
+        if (res != JOptionPane.OK_OPTION) {
+            return;
+        }
+        
         tableModel.setRowCount(0);
-
+        
+        String s = searchF.getText().trim().toLowerCase();
+        
+        if (s.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Please enter a venue name or ID to search by.",
+                "Invalid Search",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        
         for (Venue v : VenueManager.getAll()) {
-            if (String.valueOf(v.getVenueId()).contains(query)
-                || v.getName().toLowerCase().contains(query)) {
+            if (String.valueOf(v.getVenueId()).contains(s)
+                || v.getName().toLowerCase().contains(s)) {
 
                 tableModel.addRow(new Object[]{
                     v.getVenueId(),
                     v.getName()
                 });
             }
+        }
+        
+        if (tableModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "No venues matched your search.",
+                "No Results",
+                JOptionPane.INFORMATION_MESSAGE
+            );
         }
     }
 
