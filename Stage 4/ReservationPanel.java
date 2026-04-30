@@ -38,12 +38,12 @@ public class ReservationPanel extends BasePanel {
         
         if (ReservationManager.getAll().isEmpty()) {
             JOptionPane.showMessageDialog(
-                    this,
-                    "There are no reservations to search for.",
-                    "No Reservations in Catalog",
-                    JOptionPane.WARNING_MESSAGE   
-                );
-                return;
+                this,
+                "There are no reservations to search for.",
+                "No Reservations in Catalog",
+                JOptionPane.WARNING_MESSAGE   
+            );
+            return;
         }
         
         JTextField searchF = new JTextField();
