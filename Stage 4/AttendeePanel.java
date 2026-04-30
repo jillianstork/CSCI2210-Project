@@ -33,24 +33,69 @@ public class AttendeePanel extends BasePanel {
 
     // SEARCH
     @Override
-    protected void doSearch(String q) {
+    protected void doSearch() {
+        
+        if(SpeakerManager.getAll().isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "There are no attendees to search for.",
+                "No Attendees in Catalog",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        
+        JTextField searchF = new JTextField();
+        
+        int res = JOptionPane.showConfirmDialog(
+            this,
+            new Object[] {"Searching for:", searchF},
+            "Search Attendees",
+            JOptionPane.OK_CANCEL_OPTION
+        );
+        
+        if (res != JOptionPane.OK_OPTION) {
+            return;
+        }
+        
         tableModel.setRowCount(0);
+        
+        String s = searchF.getText().trim().toLowerCase();
+        
+        if (s.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Please enter an attendee feature to search by.",
+                "Invalid Search",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
 
-        for (Attendee a : AttendeeManager.getAll()) {
-            if (String.valueOf(a.getAttendeeID()).contains(q)
-                || a.getName().toLowerCase().contains(q)
-                || a.getEmail().toLowerCase().contains(q)
-                || a.getOrganization().toLowerCase().contains(q)) {
+        for (Attendee x : AttendeeManager.getAll()) {
+            if (String.valueOf(x.getAttendeeID()).contains(s)
+                || x.getName().toLowerCase().contains(s)
+                || x.getEmail().toLowerCase().contains(s)
+                || x.getOrganization().toLowerCase().contains(s)) {
 
                 tableModel.addRow(new Object[]{
-                    a.getAttendeeID(),
-                    a.getName(),
-                    a.getEmail(),
-                    a.getPhoneNumber(),
-                    a.getOrganization(),
-                    a.getJobTitle()
+                    x.getAttendeeID(),
+                    x.getName(),
+                    x.getEmail(),
+                    x.getPhoneNumber(),
+                    x.getOrganization(),
+                    x.getJobTitle()
                 });
             }
+        }
+        
+        if (tableModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "No attendees matched your search.",
+                "No Results",
+                JOptionPane.INFORMATION_MESSAGE
+            );
         }
     }
 
