@@ -57,7 +57,6 @@ public abstract class BasePanel extends JPanel {
         
         searchBtn.addActionListener (e -> {
             doSearch();
-            refreshTable();
         });
 
         //auto-load data
