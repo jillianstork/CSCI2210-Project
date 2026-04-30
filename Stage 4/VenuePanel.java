@@ -34,13 +34,13 @@ public class VenuePanel extends BasePanel {
     protected void doSearch() {  
         
         if (VenueManager.getAll().isEmpty()) {
-                JOptionPane.showMessageDialog(
-                    this,
-                    "There are no venues to search for.",
-                    "No Venues in Catalog",
-                    JOptionPane.WARNING_MESSAGE   
-                );
-                return;
+            JOptionPane.showMessageDialog(
+                this,
+                "There are no venues to search for.",
+                "No Venues in Catalog",
+                JOptionPane.WARNING_MESSAGE   
+            );
+            return;
         }
         
         JTextField searchF = new JTextField();
