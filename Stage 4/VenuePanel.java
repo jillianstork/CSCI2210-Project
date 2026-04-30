@@ -63,7 +63,7 @@ public class VenuePanel extends BasePanel {
         if (s.isEmpty()) {
             JOptionPane.showMessageDialog(
                 this,
-                "Please enter a venue name or ID to search by.",
+                "Please enter a venue feature to search by.",
                 "Invalid Search",
                 JOptionPane.WARNING_MESSAGE
             );
