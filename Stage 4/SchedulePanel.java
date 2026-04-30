@@ -40,33 +40,78 @@ public class SchedulePanel extends BasePanel {
     }
 
     @Override
-    protected void doSearch(String q) {
+    protected void doSearch() {
+        
+        if(ScheduleManager.getAll().isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "There are no schedules to search for.",
+                "No Schedules in Catalog",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        
+        JTextField searchF = new JTextField();
+        
+        int res = JOptionPane.showConfirmDialog(
+            this,
+            new Object[] {"Searching for:", searchF},
+            "Search Schedules",
+            JOptionPane.OK_CANCEL_OPTION
+        );
+        
+        if (res != JOptionPane.OK_OPTION) {
+            return;
+        }
+        
         tableModel.setRowCount(0);
+        
+        String s = searchF.getText().trim().toLowerCase();
+        
+        if (s.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Please enter a schedule feature to search by.",
+                "Invalid Search",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
 
-        for (Schedule s : ScheduleManager.getAll()) {
+        for (Schedule x : ScheduleManager.getAll()) {
 
-            String conf = s.getConference() != null
-                    ? s.getConference().getTitle().toLowerCase()
+            String conf = x.getConference() != null
+                    ? x.getConference().getTitle().toLowerCase()
                     : "";
 
-            String room = s.getRoom() != null
-                    ? s.getRoom().getName().toLowerCase()
+            String room = x.getRoom() != null
+                    ? x.getRoom().getName().toLowerCase()
                     : "";
 
-            if (String.valueOf(s.getScheduleId()).contains(q)
-                    || conf.contains(q)
-                    || room.contains(q)
-                    || s.getDate().toLowerCase().contains(q)) {
+            if (String.valueOf(x.getScheduleId()).contains(s)
+                    || conf.contains(s)
+                    || room.contains(s)
+                    || x.getDate().toLowerCase().contains(s)) {
 
                 tableModel.addRow(new Object[]{
-                    s.getScheduleId(),
-                    s.getConference() != null ? s.getConference().getTitle() : "?",
-                    s.getRoom() != null ? s.getRoom().getName() : "?",
-                    s.getDate(),
-                    s.getStartTime(),
-                    s.getEndTime()
+                    x.getScheduleId(),
+                    x.getConference() != null ? x.getConference().getTitle() : "?",
+                    x.getRoom() != null ? x.getRoom().getName() : "?",
+                    x.getDate(),
+                    x.getStartTime(),
+                    x.getEndTime()
                 });
             }
+        }
+        
+        if (tableModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "No schedules matched your search.",
+                "No Results",
+                JOptionPane.INFORMATION_MESSAGE
+            );
         }
     }
 
