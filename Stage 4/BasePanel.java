@@ -55,17 +55,17 @@ public abstract class BasePanel extends JPanel {
             refreshTable();
         });
         
-        //searchBtn.addActionListener (e -> {
-            //doSearch();
-            //refreshTable();
-        //});
+        searchBtn.addActionListener (e -> {
+            doSearch();
+            refreshTable();
+        });
 
         //auto-load data
         refreshTable();
     }
 
     protected abstract void refreshTable();
-    protected abstract void doSearch(String q);
+    protected abstract void doSearch();
     protected abstract void doAdd();
     protected abstract void doEdit();
     protected abstract void doDelete();
