@@ -34,15 +34,51 @@ public class ReservationPanel extends BasePanel {
     }
 
     @Override
-    protected void doSearch(String q) {
+    protected void doSearch() {
+        
+        if (ReservationManager.getAll().isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "There are no reservations to search for.",
+                    "No Reservations in Catalog",
+                    JOptionPane.WARNING_MESSAGE   
+                );
+                return;
+        }
+        
+        JTextField searchF = new JTextField();
+        
+        int res = JOptionPane.showConfirmDialog(
+            this,
+            new Object[] { "Searching for:", searchF},
+            "Search Reservations",
+            JOptionPane.OK_CANCEL_OPTION
+        );
+        
+        if (res != JOptionPane.OK_OPTION) {
+            return;
+        }
+        
         tableModel.setRowCount(0);
+        
+        String s = searchF.getText().trim().toLowerCase();
+        
+        if (s.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Please enter a reservation feature to search by.",
+                "Invalid Search",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
 
         for (Reservation r : ReservationManager.getAll()) {
             String room = r.getRoom() != null ? r.getRoom().getName().toLowerCase() : "";
 
-            if (String.valueOf(r.getReservationId()).contains(q)
-                    || room.contains(q)
-                    || r.getStatus().toLowerCase().contains(q)) {
+            if (String.valueOf(r.getReservationId()).contains(s)
+                    || room.contains(s)
+                    || r.getStatus().toLowerCase().contains(s)) {
 
                 tableModel.addRow(new Object[]{
                     r.getReservationId(),
@@ -52,6 +88,15 @@ public class ReservationPanel extends BasePanel {
                     r.getStatus()
                 });
             }
+        }
+        
+        if (tableModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "No reservations matched your search.",
+                "No Results",
+                JOptionPane.INFORMATION_MESSAGE
+            );
         }
     }
 
