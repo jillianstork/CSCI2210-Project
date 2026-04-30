@@ -35,15 +35,51 @@ public class RoomPanel extends BasePanel {
 
     // ---------------- SEARCH  ----------------
     @Override
-    protected void doSearch(String q) {
+    protected void doSearch() {
+        
+        if (RoomManager.getAll().isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "There are no rooms to search for.",
+                "No Rooms in Catalog",
+                JOptionPane.WARNING_MESSAGE   
+            );
+            return;
+        }
+        
+        JTextField searchF = new JTextField();
+        
+        int res = JOptionPane.showConfirmDialog(
+            this,
+            new Object[] {"Searching for:", searchF},
+            "Search Reservations",
+            JOptionPane.OK_CANCEL_OPTION
+        );
+        
+        if (res != JOptionPane.OK_OPTION) {
+            return;
+        }
+        
         tableModel.setRowCount(0);
+        
+        String s = searchF.getText().trim().toLowerCase();
+        
+        if (s.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Please enter a room feature to search by.",
+                "Invalid Search",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
 
         for (Room r : RoomManager.getAll()) {
             String venue = r.getLocation() != null ? r.getLocation().getName().toLowerCase() : "";
 
-            if (String.valueOf(r.getRoomId()).contains(q)
-                || r.getName().toLowerCase().contains(q)
-                || venue.contains(q)) {
+            if (String.valueOf(r.getRoomId()).contains(s)
+                || r.getName().toLowerCase().contains(s)
+                || venue.contains(s)) {
 
                 tableModel.addRow(new Object[]{
                     r.getRoomId(),
@@ -54,6 +90,15 @@ public class RoomPanel extends BasePanel {
                     r.getNumberOfComputers()
                 });
             }
+        }
+        
+        if (tableModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "No rooms matched your search.",
+                "No Results",
+                JOptionPane.INFORMATION_MESSAGE
+            );
         }
     }
 
