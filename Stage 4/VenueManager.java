@@ -127,6 +127,6 @@ public class VenueManager {
 
     }
     public static ArrayList<Venue> getAll() {
-    return venues;
+        return venues;
 }
 }
