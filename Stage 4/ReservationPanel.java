@@ -46,11 +46,15 @@ public class ReservationPanel extends BasePanel {
             return;
         }
         
-        JTextField searchF = new JTextField();
+        JTextField idSearchF = new JTextField();
+        JTextField generalSearchF = new JTextField();
         
         int res = JOptionPane.showConfirmDialog(
             this,
-            new Object[] { "Searching for:", searchF},
+            new Object[] {
+                "General Search:", generalSearchF,
+                "Search by ID:", idSearchF
+            },
             "Search Reservations",
             JOptionPane.OK_CANCEL_OPTION
         );
@@ -61,9 +65,26 @@ public class ReservationPanel extends BasePanel {
         
         tableModel.setRowCount(0);
         
-        String s = searchF.getText().trim().toLowerCase();
+        String s = generalSearchF.getText().trim().toLowerCase();
         
-        if (s.isEmpty()) {
+        String idResult = idSearchF.getText().trim();
+        Integer id = null;
+        try {
+            if (!idResult.isEmpty()) {
+                id = Integer.valueOf(idResult);
+            }
+        }
+        catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "ID must be a number.",
+                "Invalid ID",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        
+        if (s.isEmpty() && idResult.isEmpty()) {
             JOptionPane.showMessageDialog(
                 this,
                 "Please enter a reservation feature to search by.",
@@ -76,10 +97,12 @@ public class ReservationPanel extends BasePanel {
         for (Reservation r : ReservationManager.getAll()) {
             String room = r.getRoom() != null ? r.getRoom().getName().toLowerCase() : "";
 
-            if (String.valueOf(r.getReservationId()).contains(s)
-                    || room.contains(s)
-                    || r.getStatus().toLowerCase().contains(s)) {
-
+            boolean matchesGeneral = room.contains(s)
+                    || r.getStatus().toLowerCase().contains(s);
+            
+            boolean matchesId = (id == null || id == r.getReservationId());
+            
+            if (matchesGeneral && matchesId) {
                 tableModel.addRow(new Object[]{
                     r.getReservationId(),
                     r.getRoom() != null ? r.getRoom().getName() : "?",
