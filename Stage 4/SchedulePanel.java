@@ -52,11 +52,15 @@ public class SchedulePanel extends BasePanel {
             return;
         }
         
-        JTextField searchF = new JTextField();
+        JTextField idSearchF = new JTextField();
+        JTextField generalSearchF = new JTextField();
         
         int res = JOptionPane.showConfirmDialog(
             this,
-            new Object[] {"Searching for:", searchF},
+            new Object[] {
+                "General Search:", generalSearchF,
+                "Search by ID:", idSearchF
+            },
             "Search Schedules",
             JOptionPane.OK_CANCEL_OPTION
         );
@@ -67,9 +71,26 @@ public class SchedulePanel extends BasePanel {
         
         tableModel.setRowCount(0);
         
-        String s = searchF.getText().trim().toLowerCase();
+        String s = generalSearchF.getText().trim().toLowerCase();
         
-        if (s.isEmpty()) {
+        String idResult = idSearchF.getText().trim();
+        Integer id = null;
+        try {
+            if (!idResult.isEmpty()) {
+                id = Integer.valueOf(idResult);
+            }
+        }
+        catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "ID must be a number.",
+                "Invalid ID",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        
+        if (s.isEmpty() && idResult.isEmpty()) {
             JOptionPane.showMessageDialog(
                 this,
                 "Please enter a schedule feature to search by.",
@@ -88,12 +109,14 @@ public class SchedulePanel extends BasePanel {
             String room = x.getRoom() != null
                     ? x.getRoom().getName().toLowerCase()
                     : "";
-
-            if (String.valueOf(x.getScheduleId()).contains(s)
-                    || conf.contains(s)
+            
+            boolean matchesGeneral = conf.contains(s)
                     || room.contains(s)
-                    || x.getDate().toLowerCase().contains(s)) {
-
+                    || x.getDate().toLowerCase().contains(s);
+            
+            boolean matchesId = (id == null || x.getScheduleId() == id);
+            
+            if (matchesGeneral && matchesId) {
                 tableModel.addRow(new Object[]{
                     x.getScheduleId(),
                     x.getConference() != null ? x.getConference().getTitle() : "?",

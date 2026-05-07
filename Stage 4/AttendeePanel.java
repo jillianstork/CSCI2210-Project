@@ -45,11 +45,15 @@ public class AttendeePanel extends BasePanel {
             return;
         }
         
-        JTextField searchF = new JTextField();
+        JTextField generalSearchF = new JTextField();
+        JTextField idSearchF = new JTextField();
         
         int res = JOptionPane.showConfirmDialog(
             this,
-            new Object[] {"Searching for:", searchF},
+            new Object[] {
+                "General Search:", generalSearchF,
+                "Search by ID:", idSearchF
+            },
             "Search Attendees",
             JOptionPane.OK_CANCEL_OPTION
         );
@@ -60,9 +64,26 @@ public class AttendeePanel extends BasePanel {
         
         tableModel.setRowCount(0);
         
-        String s = searchF.getText().trim().toLowerCase();
+        String s = generalSearchF.getText().trim().toLowerCase();
         
-        if (s.isEmpty()) {
+        String idResult = idSearchF.getText().trim();
+        Integer id = null;
+        try {
+            if (!idResult.isEmpty()) {
+                id = Integer.valueOf(idResult);
+            }
+        }
+        catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "ID must be a number.",
+                "Invalid ID",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        
+        if (s.isEmpty() && idResult.isEmpty()) {
             JOptionPane.showMessageDialog(
                 this,
                 "Please enter an attendee feature to search by.",
@@ -73,11 +94,14 @@ public class AttendeePanel extends BasePanel {
         }
 
         for (Attendee x : AttendeeManager.getAll()) {
-            if (String.valueOf(x.getAttendeeID()).contains(s)
-                || x.getName().toLowerCase().contains(s)
+            
+            boolean matchesGeneral = x.getName().toLowerCase().contains(s)
                 || x.getEmail().toLowerCase().contains(s)
-                || x.getOrganization().toLowerCase().contains(s)) {
-
+                || x.getOrganization().toLowerCase().contains(s);
+            
+            boolean matchesId = (id == null || x.getAttendeeID() == id);
+            
+            if (matchesGeneral && matchesId) {
                 tableModel.addRow(new Object[]{
                     x.getAttendeeID(),
                     x.getName(),
