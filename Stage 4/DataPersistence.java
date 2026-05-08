@@ -264,7 +264,7 @@ public class DataPersistence {
             while (sc.hasNextLine()) {
                 String[] p = sc.nextLine().split("\\|");
 
-                if (p.length < 2) continue;
+                if (p.length < 3) continue;
 
                 ReservationManager.addReservation(
                     null,
@@ -285,6 +285,8 @@ public class DataPersistence {
 
             for (Schedule s : ScheduleManager.getAll()) {
                 pw.println(
+                    s.getRoom().getName() + "|" +
+                    s.getConference().getTitle() + "|" +
                     s.getDate() + "|" +
                     s.getStartTime() + "|" +
                     s.getEndTime()
