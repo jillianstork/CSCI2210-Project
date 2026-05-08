@@ -35,7 +35,7 @@ public class Main {
             JButton speakersBtn = new JButton("Speakers");
             JButton attendeesBtn = new JButton("Attendees");
             JButton organizersBtn = new JButton("Organizers");
-            JButton reportsBtn = new JButton("Reports");
+            //JButton reportsBtn = new JButton("Reports");
             JButton exitBtn = new JButton("Exit");
 
             panel.add(Box.createVerticalStrut(20));
@@ -49,7 +49,7 @@ public class Main {
             panel.add(speakersBtn);
             panel.add(attendeesBtn);
             panel.add(organizersBtn);
-            panel.add(reportsBtn);
+            //panel.add(reportsBtn);
 
             panel.add(Box.createVerticalStrut(20));
             panel.add(exitBtn);
@@ -66,7 +66,7 @@ public class Main {
             speakersBtn.addActionListener(e -> openWindow("Speakers", new SpeakerPanel()));
             attendeesBtn.addActionListener(e -> openWindow("Attendees", new AttendeePanel()));
             organizersBtn.addActionListener(e -> openWindow("Organizers", new OrganizerPanel()));
-            reportsBtn.addActionListener(e -> openWindow("Reports", new ReportsPanel()));
+            //reportsBtn.addActionListener(e -> openWindow("Reports", new ReportsPanel()));
             
             exitBtn.addActionListener(e -> System.exit(0));
         });
