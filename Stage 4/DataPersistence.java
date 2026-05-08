@@ -33,55 +33,6 @@ public class DataPersistence {
         loadVenues();
     }
 
-    
-    // ROOMS
-   
-
-    private static void saveRooms() {
-        try (PrintWriter pw = new PrintWriter("rooms.txt")) {
-
-            for (Room r : RoomManager.getAll()) {
-                pw.println(
-                    r.getName() + "|" +
-                    r.getCapacity() + "|" +
-                    r.getLocation().getName() + "|" +
-                    r.getHasProjector() + "|" +
-                    r.getNumberOfComputers()
-                );
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error saving rooms:");
-            e.printStackTrace();
-        }
-    }
-
-    private static void loadRooms() {
-        File file = new File("rooms.txt");
-        if (!file.exists()) return;
-
-        try (Scanner sc = new Scanner(file)) {
-
-            while (sc.hasNextLine()) {
-                String[] p = sc.nextLine().split("\\|");
-
-                if (p.length < 4) continue;
-
-                RoomManager.addRoom(
-                    p[0],
-                    Integer.parseInt(p[1]),
-                    null,
-                    Boolean.parseBoolean(p[2]),
-                    Integer.parseInt(p[3])
-                );
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error loading rooms:");
-            e.printStackTrace();
-        }
-    }
-
    
     // SPEAKERS
  
@@ -238,6 +189,92 @@ public class DataPersistence {
         }
     }
     
+    // VENUES
+    private static void saveVenues() {
+        try (PrintWriter pw = new PrintWriter("venues.txt")) {
+
+            for (Venue v : VenueManager.getAll()) {
+                pw.println(
+                    v.getName()
+                );
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error saving venues:");
+            e.printStackTrace();
+        }
+    }
+
+    private static void loadVenues() {
+        File file = new File("venues.txt");
+        if (!file.exists()) return;
+
+        try (Scanner sc = new Scanner(file)) {
+
+            while (sc.hasNextLine()) {
+                String[] p = sc.nextLine().split("\\|");
+
+                if (p.length < 1) continue;
+
+                VenueManager.addVenue(
+                    p[0]
+                );
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error loading venues:");
+            e.printStackTrace();
+        }
+    }
+    
+    // ROOMS
+   
+
+    private static void saveRooms() {
+        try (PrintWriter pw = new PrintWriter("rooms.txt")) {
+
+            for (Room r : RoomManager.getAll()) {
+                pw.println(
+                    r.getName() + "|" +
+                    r.getCapacity() + "|" +
+                    r.getLocation().getName() + "|" +
+                    r.getHasProjector() + "|" +
+                    r.getNumberOfComputers()
+                );
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error saving rooms:");
+            e.printStackTrace();
+        }
+    }
+
+    private static void loadRooms() {
+        File file = new File("rooms.txt");
+        if (!file.exists()) return;
+
+        try (Scanner sc = new Scanner(file)) {
+
+            while (sc.hasNextLine()) {
+                String[] p = sc.nextLine().split("\\|");
+
+                if (p.length < 5) continue;
+
+                RoomManager.addRoom(
+                    p[0],
+                    Integer.parseInt(p[1]),
+                    null,
+                    Boolean.parseBoolean(p[3]),
+                    Integer.parseInt(p[4])
+                );
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error loading rooms:");
+            e.printStackTrace();
+        }
+    }
+    
     // RESERVATIONS
     private static void saveReservations() {
         try (PrintWriter pw = new PrintWriter("reservations.txt")) {
@@ -309,57 +346,19 @@ public class DataPersistence {
             while (sc.hasNextLine()) {
                 String[] p = sc.nextLine().split("\\|");
 
-                if (p.length < 3) continue;
+                if (p.length < 5) continue;
 
                 ScheduleManager.addSchedule(
                     null,
                     null,
-                    p[0],
-                    p[1],
-                    p[2]
+                    p[2],
+                    p[3],
+                    p[4]
                 );
             }
 
         } catch (Exception e) {
             System.out.println("Error loading schedules:");
-            e.printStackTrace();
-        }
-    }
-    
-    // VENUES
-    private static void saveVenues() {
-        try (PrintWriter pw = new PrintWriter("venues.txt")) {
-
-            for (Venue v : VenueManager.getAll()) {
-                pw.println(
-                    v.getName()
-                );
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error saving venues:");
-            e.printStackTrace();
-        }
-    }
-
-    private static void loadVenues() {
-        File file = new File("venues.txt");
-        if (!file.exists()) return;
-
-        try (Scanner sc = new Scanner(file)) {
-
-            while (sc.hasNextLine()) {
-                String[] p = sc.nextLine().split("\\|");
-
-                if (p.length < 1) continue;
-
-                VenueManager.addVenue(
-                    p[0]
-                );
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error loading venues:");
             e.printStackTrace();
         }
     }
