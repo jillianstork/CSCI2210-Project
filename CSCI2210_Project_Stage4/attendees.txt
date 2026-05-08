@@ -1,8 +1,0 @@
-Jaime R.|r.jaime@gmail.com|484-924-8151|3244 W University Way, Timeca, Washington, USA||Random University|Professor
-Lucia P.|p.lucia@gmail.com|505-396-6820|6840 N Woodlands Dr, Lyre, Georgia, USA||Lyre State University|Professor
-Jaime R.|r.jaime@gmail.com|484-924-8151|3244 W University Way, Timeca, Washington, USA||Random University|Professor
-Lucia P.|p.lucia@gmail.com|505-396-6820|6840 N Woodlands Dr, Lyre, Georgia, USA||Lyre State University|Professor
-Jaime R.\|r.jaime@gmail.com\|484-924-8151\|3244 W University Way, Timeca, Washington, USA\|\|Random University\|Professor
-Lucia P.\|p.lucia@gmail.com\|505-396-6820\|6840 N Woodlands Dr, Lyre, Georgia, USA\|\|Lyre State University\|Professor
-Jaime R.\|r.jaime@gmail.com\|484-924-8151\|3244 W University Way, Timeca, Washington, USA\|\|Random University\|Professor
-Lucia P.\|p.lucia@gmail.com\|505-396-6820\|6840 N Woodlands Dr, Lyre, Georgia, USA\|\|Lyre State University\|Professor
