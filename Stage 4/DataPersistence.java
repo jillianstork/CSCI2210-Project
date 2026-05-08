@@ -24,13 +24,13 @@ public class DataPersistence {
 
     //  LOAD ALL
     public static void loadAll() {
+        loadVenues();
         loadRooms();
         loadSpeakers();
         loadAttendees();
         loadOrganizers();
         loadReservations();
-        loadSchedules();
-        loadVenues();
+        loadSchedules(); 
     }
 
    
