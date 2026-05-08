@@ -1,2 +1,2 @@
-01/01/2001|11:00am|8:00pm
-08/21/2023|9:00am|6:00pm
+Great Room|Psychology Research Conference|01/01/2001|11:00am|8:00pm
+B143|Computer Science Research Conference|08/21/2023|9:00am|6:00pm
