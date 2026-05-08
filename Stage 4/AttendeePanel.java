@@ -33,7 +33,7 @@ public class AttendeePanel extends BasePanel {
 
     // SEARCH
     @Override
-    protected void doSearch(String q) {
+    protected void doSearch() {
 
         if (AttendeeManager.getAll().isEmpty()) {
             JOptionPane.showMessageDialog(
@@ -45,7 +45,7 @@ public class AttendeePanel extends BasePanel {
             return;
         }
 
-        JTextField generalSearchF = new JTextField(q);
+        JTextField generalSearchF = new JTextField();
         JTextField idSearchF = new JTextField();
 
         int res = JOptionPane.showConfirmDialog(

@@ -33,7 +33,7 @@ public class OrganizerPanel extends BasePanel {
 
     // search by name, email, organization, or ID
     @Override
-    protected void doSearch(String q) {
+    protected void doSearch() {
 
         if (OrganizerManager.getAll().isEmpty()) {
             JOptionPane.showMessageDialog(
@@ -45,7 +45,7 @@ public class OrganizerPanel extends BasePanel {
             return;
         }
 
-        JTextField generalSearchF = new JTextField(q);
+        JTextField generalSearchF = new JTextField();
         JTextField idSearchF = new JTextField();
 
         int res = JOptionPane.showConfirmDialog(
