@@ -72,13 +72,13 @@ public class DataPersistence {
                 if (p.length < 7) continue;
 
                 SpeakerManager.addSpeaker(
-                    p[0],
-                    p[1],
-                    p[2],
-                    p[3],
-                    p[4],
-                    p[5],
-                    p[6]
+                    p[0] = p[0].trim(),
+                    p[1] = p[1].trim(),
+                    p[2] = p[2].trim(),
+                    p[3] = p[3].trim(),
+                    p[4] = p[4].trim(),
+                    p[5] = p[5].trim(),
+                    p[6] = p[6].trim()
                 );
             }
 
@@ -125,13 +125,13 @@ public class DataPersistence {
                 if (p.length < 7) continue;
 
                 AttendeeManager.addAttendee(
-                    p[0],
-                    p[1],
-                    p[2],
-                    p[3],
-                    p[4],
-                    p[5],
-                    p[6]
+                    p[0] = p[0].trim(),
+                    p[1] = p[1].trim(),
+                    p[2] = p[2].trim(),
+                    p[3] = p[3].trim(),
+                    p[4] = p[4].trim(),
+                    p[5] = p[5].trim(),
+                    p[6] = p[6].trim()
                 );
             }
 
@@ -175,13 +175,13 @@ public class DataPersistence {
                 if (p.length < 7) continue;
 
                 OrganizerManager.addOrganizer(
-                    p[0],
-                    p[1],
-                    p[2],
-                    p[3],
-                    p[4],
-                    p[5],
-                    p[6]
+                    p[0] = p[0].trim(),
+                    p[1] = p[1].trim(),
+                    p[2] = p[2].trim(),
+                    p[3] = p[3].trim(),
+                    p[4] = p[4].trim(),
+                    p[5] = p[5].trim(),
+                    p[6] = p[6].trim()
                 );
             }
 
@@ -219,7 +219,7 @@ public class DataPersistence {
                 if (p.length < 1) continue;
 
                 VenueManager.addVenue(
-                    p[0]
+                    p[0] = p[0].trim()
                 );
             }
 
@@ -265,7 +265,7 @@ public class DataPersistence {
                 Venue venue = VenueManager.getByName(p[2]);
 
                 RoomManager.addRoom(
-                    p[0],
+                    p[0] = p[0].trim(),
                     Integer.parseInt(p[1]),
                     venue,
                     Boolean.parseBoolean(p[3]),
@@ -312,8 +312,8 @@ public class DataPersistence {
 
                 ReservationManager.addReservation(
                     room,
-                    p[1],
-                    p[2]
+                    p[1] = p[1].trim(),
+                    p[2] = p[2].trim()
                 );
             }
 
@@ -360,9 +360,9 @@ public class DataPersistence {
                 ScheduleManager.addSchedule(
                     room,
                     conf,
-                    p[2],
-                    p[3],
-                    p[4]
+                    p[2] = p[2].trim(),
+                    p[3] = p[3].trim(),
+                    p[4] = p[4].trim()
                 );
             }
 
@@ -403,10 +403,10 @@ public class DataPersistence {
                 if (p.length < 4) continue;
                 
                 ConferenceManager.addConference(
-                    p[0],
-                    p[1],
-                    p[2],
-                    p[3]
+                    p[0] = p[0].trim(),
+                    p[1] = p[1].trim(),
+                    p[2] = p[2].trim(),
+                    p[3] = p[3].trim()
                 );
             }
 
