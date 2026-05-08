@@ -128,7 +128,7 @@ public class VenueManager {
     
     public static Venue getByName(String name) {
         for (Venue v : getAll()) {
-            if (v.getName().equals(name)) {
+            if (v.getName().trim().equalsIgnoreCase(name.trim())) {
                 return v;
             }
         }
