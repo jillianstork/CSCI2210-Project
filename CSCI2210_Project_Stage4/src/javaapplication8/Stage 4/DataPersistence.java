@@ -27,10 +27,10 @@ public class DataPersistence {
     public static void loadAll() {
         loadVenues();
         loadRooms();
+        loadConferences();
         loadSpeakers();
         loadAttendees();
         loadOrganizers();
-        loadConferences();
         loadReservations();
         loadSchedules(); 
     }
