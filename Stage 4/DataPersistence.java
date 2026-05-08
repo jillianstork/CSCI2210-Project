@@ -44,6 +44,7 @@ public class DataPersistence {
                 pw.println(
                     r.getName() + "|" +
                     r.getCapacity() + "|" +
+                    r.getLocation().getName() + "|" +
                     r.getHasProjector() + "|" +
                     r.getNumberOfComputers()
                 );
@@ -243,7 +244,7 @@ public class DataPersistence {
 
             for (Reservation r : ReservationManager.getAll()) {
                 pw.println(
-                    r.getRoom() + "|" +
+                    r.getRoom().getName() + "|" +
                     r.getStartDateOrTime() + "|" +
                     r.getEndDateOrTime()
                 );
