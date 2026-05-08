@@ -258,7 +258,7 @@ public class DataPersistence {
             while (sc.hasNextLine()) {
                 String[] p = sc.nextLine().split("\\|");
 
-                if (p.length < 6) continue;
+                if (p.length < 5) continue;
                 
                 Venue venue = VenueManager.getByName(p[2]);
 
