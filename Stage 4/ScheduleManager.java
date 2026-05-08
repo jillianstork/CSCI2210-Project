@@ -194,7 +194,8 @@ public class ScheduleManager {
         }
         return null;
     }
+    
     public static ArrayList<Schedule> getAll() {
-    return schedules;
-}
+        return schedules;
+    }
 }
