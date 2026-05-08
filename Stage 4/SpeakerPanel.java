@@ -32,7 +32,7 @@ public class SpeakerPanel extends BasePanel {
 
     // SEARCH
     @Override
-    protected void doSearch(String q) {
+    protected void doSearch() {
         
         if(SpeakerManager.getAll().isEmpty()) {
             JOptionPane.showMessageDialog(
@@ -44,7 +44,7 @@ public class SpeakerPanel extends BasePanel {
             return;
         }
         
-        JTextField generalSearchF = new JTextField(q);
+        JTextField generalSearchF = new JTextField();
         JTextField idSearchF = new JTextField();
         
         int res = JOptionPane.showConfirmDialog(
