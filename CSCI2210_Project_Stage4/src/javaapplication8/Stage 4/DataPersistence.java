@@ -258,14 +258,14 @@ public class DataPersistence {
             while (sc.hasNextLine()) {
                 String[] p = sc.nextLine().split("\\|");
 
-                if (p.length < 5) continue;
+                if (p.length < 6) continue;
 
                 RoomManager.addRoom(
-                    p[0].trim(),
-                    Integer.parseInt(p[1].trim()),
+                    p[0],
+                    Integer.parseInt(p[1]),
                     null,
-                    Boolean.parseBoolean(p[3].trim()),
-                    Integer.parseInt(p[4].trim())
+                    Boolean.parseBoolean(p[3]),
+                    Integer.parseInt(p[4])
                 );
             }
 
