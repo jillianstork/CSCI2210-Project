@@ -2,18 +2,19 @@
  * @author Maya L. Garcia Schafer
  * CSCI 2210 Project
  * Conference Management System
- * Organizer Panel Class
- * This is the class for the organizer GUI
+ * OrganizerPanel Class
+ * This is the class for the Organizer GUI
  */
+
 import javax.swing.*;
 
 public class OrganizerPanel extends BasePanel {
 
     public OrganizerPanel() {
-        super(new String[]{"ID","Name","Email","Phone","Organization","Job Title"});
+        super(new String[]{"ID", "Name", "Email", "Phone", "Organization", "Job Title"});
     }
 
-    // READ
+    // pulls all organizers into the table
     @Override
     protected void refreshTable() {
         tableModel.setRowCount(0);
@@ -30,49 +31,44 @@ public class OrganizerPanel extends BasePanel {
         }
     }
 
-    // SEARCH
+    // search by name, email, organization, or ID
     @Override
-    protected void doSearch() {
-        
-        if(OrganizerManager.getAll().isEmpty()) {
+    protected void doSearch(String q) {
+
+        if (OrganizerManager.getAll().isEmpty()) {
             JOptionPane.showMessageDialog(
                 this,
                 "There are no organizers to search for.",
-                "No Organizers in Catalog",
+                "No Organizers Found",
                 JOptionPane.WARNING_MESSAGE
             );
             return;
         }
-        
-        JTextField generalSearchF = new JTextField();
+
+        JTextField generalSearchF = new JTextField(q);
         JTextField idSearchF = new JTextField();
-        
+
         int res = JOptionPane.showConfirmDialog(
             this,
-            new Object[] {
+            new Object[]{
                 "General Search:", generalSearchF,
                 "Search by ID:", idSearchF
             },
             "Search Organizers",
             JOptionPane.OK_CANCEL_OPTION
         );
-        
-        if (res != JOptionPane.OK_OPTION) {
-            return;
-        }
-        
-        tableModel.setRowCount(0);
-        
+
+        if (res != JOptionPane.OK_OPTION) return;
+
         String s = generalSearchF.getText().trim().toLowerCase();
-        
         String idResult = idSearchF.getText().trim();
         Integer id = null;
+
         try {
             if (!idResult.isEmpty()) {
                 id = Integer.valueOf(idResult);
             }
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(
                 this,
                 "ID must be a number.",
@@ -81,7 +77,7 @@ public class OrganizerPanel extends BasePanel {
             );
             return;
         }
-        
+
         if (s.isEmpty() && idResult.isEmpty()) {
             JOptionPane.showMessageDialog(
                 this,
@@ -92,13 +88,15 @@ public class OrganizerPanel extends BasePanel {
             return;
         }
 
+        tableModel.setRowCount(0);
+
         for (Organizer x : OrganizerManager.getAll()) {
             boolean matchesGeneral = x.getName().toLowerCase().contains(s)
                 || x.getEmail().toLowerCase().contains(s)
                 || x.getOrganization().toLowerCase().contains(s);
-            
+
             boolean matchesId = (id == null || x.getOrganizerId() == id);
-            
+
             if (matchesGeneral && matchesId) {
                 tableModel.addRow(new Object[]{
                     x.getOrganizerId(),
@@ -110,7 +108,7 @@ public class OrganizerPanel extends BasePanel {
                 });
             }
         }
-        
+
         if (tableModel.getRowCount() == 0) {
             JOptionPane.showMessageDialog(
                 this,
@@ -121,7 +119,7 @@ public class OrganizerPanel extends BasePanel {
         }
     }
 
-    // CREATE
+    // fill out the form and add a new organizer
     @Override
     protected void doAdd() {
 
@@ -137,7 +135,7 @@ public class OrganizerPanel extends BasePanel {
         if (result == JOptionPane.OK_OPTION) {
 
             if (form.nameF.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Name required.");
+                JOptionPane.showMessageDialog(this, "Name is required.");
                 return;
             }
 
@@ -151,11 +149,12 @@ public class OrganizerPanel extends BasePanel {
                 form.jobF.getText().trim()
             );
 
+            DataPersistence.saveAll();
             refreshTable();
         }
     }
 
-    // UPDATE
+    // edit an existing organizer's details
     @Override
     protected void doEdit() {
 
@@ -192,11 +191,11 @@ public class OrganizerPanel extends BasePanel {
             o.setOrganization(form.orgF.getText().trim());
             o.setJobTitle(form.jobF.getText().trim());
 
+            DataPersistence.saveAll();
             refreshTable();
         }
     }
 
-    // DELETE
     @Override
     protected void doDelete() {
 
@@ -220,6 +219,8 @@ public class OrganizerPanel extends BasePanel {
             if (o != null) {
                 OrganizerManager.getAll().remove(o);
             }
+
+            DataPersistence.saveAll();
             refreshTable();
         }
     }
