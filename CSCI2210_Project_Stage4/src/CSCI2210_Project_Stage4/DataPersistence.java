@@ -361,11 +361,6 @@ public class DataPersistence {
                 
                 Room room = RoomManager.getByName(roomName);
                 Conference conf = ConferenceManager.getByTitle(confTitle);
-                
-                if (room == null || conf == null) {
-                    System.out.println("conference or room are null");
-                    return;
-                }
 
                 ScheduleManager.addSchedule(
                     room,
