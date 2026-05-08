@@ -124,9 +124,18 @@ public class VenueManager {
             System.out.println("Venue with ID " + deletionId +
                 " deleted successfully.");
         }
-
     }
+    
+    public static Venue getByName(String name) {
+        for (Venue v : getAll()) {
+            if (v.getName().equals(name)) {
+                return v;
+            }
+        }
+        return null;
+    }
+    
     public static ArrayList<Venue> getAll() {
         return venues;
-}
+    }
 }
