@@ -259,11 +259,13 @@ public class DataPersistence {
                 String[] p = sc.nextLine().split("\\|");
 
                 if (p.length < 6) continue;
+                
+                Venue venue = VenueManager.getByName(p[2]);
 
                 RoomManager.addRoom(
                     p[0],
                     Integer.parseInt(p[1]),
-                    null,
+                    venue,
                     Boolean.parseBoolean(p[3]),
                     Integer.parseInt(p[4])
                 );
@@ -303,9 +305,11 @@ public class DataPersistence {
                 String[] p = sc.nextLine().split("\\|");
 
                 if (p.length < 3) continue;
+                
+                Room room = RoomManager.getByName(p[0]);
 
                 ReservationManager.addReservation(
-                    null,
+                    room,
                     p[1],
                     p[2]
                 );
@@ -345,12 +349,15 @@ public class DataPersistence {
 
             while (sc.hasNextLine()) {
                 String[] p = sc.nextLine().split("\\|");
-
+                
                 if (p.length < 5) continue;
+                
+                Room room = RoomManager.getByName(p[0]);
+                Conference conf = ConferenceManager.getByTitle(p[1]);
 
                 ScheduleManager.addSchedule(
-                    null,
-                    null,
+                    room,
+                    conf,
                     p[2],
                     p[3],
                     p[4]
