@@ -12,7 +12,8 @@ public class Main {
 
     public static void main(String[] args) {
         //TestData.load();
-        DataPersistence.loadAll();  
+        DataPersistence.loadAll(); 
+        DataPersistence.saveAll();
 
         SwingUtilities.invokeLater(() -> {
 
