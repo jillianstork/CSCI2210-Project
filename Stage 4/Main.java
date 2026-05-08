@@ -11,9 +11,8 @@ import javax.swing.*;
 public class Main {
 
     public static void main(String[] args) {
-        //TestData.load();
-        DataPersistence.loadAll(); 
-        DataPersistence.saveAll();
+        TestData.load();
+        DataPersistence.loadAll();
 
         SwingUtilities.invokeLater(() -> {
 
