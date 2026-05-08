@@ -42,12 +42,12 @@ public class DataPersistence {
 
             for (Speaker s : SpeakerManager.getAll()) {
                 pw.println(
-                    s.getName() + "\\|" +
-                    s.getEmail() + "\\|" +
-                    s.getPhoneNumber() + "\\|" +
-                    s.getAddress() + "\\|" +
-                    s.getBiography() + "\\|" +
-                    s.getOrganization() + "\\|" +
+                    s.getName() + "|" +
+                    s.getEmail() + "|" +
+                    s.getPhoneNumber() + "|" +
+                    s.getAddress() + "|" +
+                    s.getBiography() + "|" +
+                    s.getOrganization() + "|" +
                     s.getJobTitle()
                 );
             }
@@ -95,12 +95,12 @@ public class DataPersistence {
 
             for (Attendee a : AttendeeManager.getAll()) {
                 pw.println(
-                    a.getName() + "\\|" +
-                    a.getEmail() + "\\|" +
-                    a.getPhoneNumber() + "\\|" +
-                    a.getAddress() + "\\|" +
-                    a.getBiography() + "\\|" +
-                    a.getOrganization() + "\\|" +
+                    a.getName() + "|" +
+                    a.getEmail() + "|" +
+                    a.getPhoneNumber() + "|" +
+                    a.getAddress() + "|" +
+                    a.getBiography() + "|" +
+                    a.getOrganization() + "|" +
                     a.getJobTitle()
                 );
             }
@@ -145,12 +145,12 @@ public class DataPersistence {
 
             for (Organizer o : OrganizerManager.getAll()) {
                 pw.println(
-                    o.getName() + "\\|" +
-                    o.getEmail() + "\\|" +
-                    o.getPhoneNumber() + "\\|" +
-                    o.getAddress() + "\\|" +
-                    o.getBiography() + "\\|" +
-                    o.getOrganization() + "\\|" +
+                    o.getName() + "|" +
+                    o.getEmail() + "|" +
+                    o.getPhoneNumber() + "|" +
+                    o.getAddress() + "|" +
+                    o.getBiography() + "|" +
+                    o.getOrganization() + "|" +
                     o.getJobTitle()
                 );
             }
@@ -235,10 +235,10 @@ public class DataPersistence {
 
             for (Room r : RoomManager.getAll()) {
                 pw.println(
-                    r.getName() + "\\|" +
-                    r.getCapacity() + "\\|" +
-                    r.getLocation().getName() + "\\|" +
-                    r.getHasProjector() + "\\|" +
+                    r.getName() + "|" +
+                    r.getCapacity() + "|" +
+                    r.getLocation().getName() + "|" +
+                    r.getHasProjector() + "|" +
                     r.getNumberOfComputers()
                 );
             }
@@ -281,8 +281,8 @@ public class DataPersistence {
 
             for (Reservation r : ReservationManager.getAll()) {
                 pw.println(
-                    r.getRoom().getName() + "\\|" +
-                    r.getStartDateOrTime() + "\\|" +
+                    r.getRoom().getName() + "|" +
+                    r.getStartDateOrTime() + "|" +
                     r.getEndDateOrTime()
                 );
             }
@@ -323,10 +323,10 @@ public class DataPersistence {
 
             for (Schedule s : ScheduleManager.getAll()) {
                 pw.println(
-                    s.getRoom().getName() + "\\|" +
-                    s.getConference().getTitle() + "\\|" +
-                    s.getDate() + "\\|" +
-                    s.getStartTime() + "\\|" +
+                    s.getRoom().getName() + "|" +
+                    s.getConference().getTitle() + "|" +
+                    s.getDate() + "|" +
+                    s.getStartTime() + "|" +
                     s.getEndTime()
                 );
             }
