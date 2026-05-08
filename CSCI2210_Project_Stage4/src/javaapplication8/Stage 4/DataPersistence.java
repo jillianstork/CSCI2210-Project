@@ -262,7 +262,7 @@ public class DataPersistence {
 
                 if (p.length < 5) continue;
                 
-                Venue venue = VenueManager.getByName(p[2]);
+                Venue venue = VenueManager.getByName(p[2].trim());
 
                 RoomManager.addRoom(
                     p[0] = p[0].trim(),
@@ -308,7 +308,7 @@ public class DataPersistence {
 
                 if (p.length < 3) continue;
                 
-                Room room = RoomManager.getByName(p[0]);
+                Room room = RoomManager.getByName(p[0].trim());
 
                 ReservationManager.addReservation(
                     room,
@@ -354,8 +354,11 @@ public class DataPersistence {
                 
                 if (p.length < 5) continue;
                 
-                Room room = RoomManager.getByName(p[0]);
-                Conference conf = ConferenceManager.getByTitle(p[1]);
+                String roomName = p[0].trim();
+                String confTitle = p[1].trim();
+                
+                Room room = RoomManager.getByName(roomName);
+                Conference conf = ConferenceManager.getByTitle(confTitle);
 
                 ScheduleManager.addSchedule(
                     room,
