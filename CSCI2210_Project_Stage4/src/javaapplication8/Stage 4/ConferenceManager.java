@@ -181,7 +181,7 @@ public class ConferenceManager {
     
     public static Conference getByTitle(String title) {
         for (Conference c : getAll()) {
-            if (c.getTitle().equals(title)) {
+            if (c.getTitle().trim().equalsIgnoreCase(title.trim())) {
                 return c;
             }
         }
