@@ -68,6 +68,10 @@ public class ScheduleManager {
      */
     public static void addSchedule(Room room, Conference conference, String date,
             String startTime, String endTime) {
+        if (room == null || conference == null) {
+            System.out.println("Missing room or conference.");
+            return;
+        }
         Schedule schedule = new Schedule(room, conference, date, startTime, endTime);
         schedules.add(schedule);
         System.out.println("Schedule with ID " + schedule.getScheduleId() + 
