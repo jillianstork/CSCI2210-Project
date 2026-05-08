@@ -13,7 +13,7 @@ import javax.swing.*;
 public class Main {
 
     public static void main(String[] args) {
-        //TestData.load();
+        TestData.load();
         DataPersistence.loadAll();
 
         SwingUtilities.invokeLater(() -> {
