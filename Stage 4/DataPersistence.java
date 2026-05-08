@@ -16,6 +16,11 @@ public class DataPersistence {
         saveRooms();
         saveSpeakers();
         saveAttendees();
+        saveOrganizers();
+        saveReservations();
+        saveSchedules();
+        saveVenues();
+        saveReports();
     }
 
     //  LOAD ALL
@@ -23,6 +28,11 @@ public class DataPersistence {
         loadRooms();
         loadSpeakers();
         loadAttendees();
+        loadOrganizers();
+        loadReservations();
+        loadSchedules();
+        loadVenues();
+        loadReports();
     }
 
     
@@ -178,4 +188,106 @@ public class DataPersistence {
             e.printStackTrace();
         }
     }
+    
+    // ORGANIZERS
+    private static void saveOrganizers() {
+        try (PrintWriter pw = new PrintWriter("organizers.txt")) {
+
+            for (Organizer o : OrganizerManager.getAll()) {
+                pw.println(
+                    o.getName() + "|" +
+                    o.getEmail() + "|" +
+                    o.getPhoneNumber() + "|" +
+                    o.getAddress() + "|" +
+                    o.getBiography() + "|" +
+                    o.getOrganization() + "|" +
+                    o.getJobTitle()
+                );
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error saving organizers:");
+            e.printStackTrace();
+        }
+    }
+
+    private static void loadOrganizers() {
+        File file = new File("organizers.txt");
+        if (!file.exists()) return;
+
+        try (Scanner sc = new Scanner(file)) {
+
+            while (sc.hasNextLine()) {
+                String[] p = sc.nextLine().split(",");
+
+                if (p.length < 7) continue;
+
+                OrganizerManager.addOrganizer(
+                    p[0],
+                    p[1],
+                    p[2],
+                    p[3],
+                    p[4],
+                    p[5],
+                    p[6]
+                );
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error loading organizers:");
+            e.printStackTrace();
+        }
+    }
+    
+    // RESERVATIONS
+    private static void saveReservations() {
+        try (PrintWriter pw = new PrintWriter("reservations.txt")) {
+
+            for (Reservation r : ReservationManager.getAll()) {
+                pw.println(
+                    r.getRoom() + "|" +
+                    r.getStartDateOrTime() + "|" +
+                    r.getEndDateOrTime()
+                );
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error saving reservations:");
+            e.printStackTrace();
+        }
+    }
+
+    private static void loadReservations() {
+        File file = new File("reservations.txt");
+        if (!file.exists()) return;
+
+        try (Scanner sc = new Scanner(file)) {
+
+            while (sc.hasNextLine()) {
+                String[] p = sc.nextLine().split(",");
+
+                if (p.length < 3) continue;
+
+                ReservationManager.addReservation(
+                    null,
+                    p[1],
+                    p[3]
+                );
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error loading reservations:");
+            e.printStackTrace();
+        }
+    }
+    
+    // SCHEDULES
+    
+    
+    
+    // VENUES
+    
+    
+    // REPORTS
+    
 }
