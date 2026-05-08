@@ -34,7 +34,7 @@ public class ReservationPanel extends BasePanel {
 
     // search by room name, status, or ID
     @Override
-    protected void doSearch(String q) {
+    protected void doSearch() {
 
         if (ReservationManager.getAll().isEmpty()) {
             JOptionPane.showMessageDialog(
@@ -46,7 +46,7 @@ public class ReservationPanel extends BasePanel {
             return;
         }
 
-        JTextField generalSearchF = new JTextField(q);
+        JTextField generalSearchF = new JTextField();
         JTextField idSearchF = new JTextField();
 
         int res = JOptionPane.showConfirmDialog(
