@@ -216,7 +216,7 @@ public class RoomManager {
     }
     
     
-public static Room getByName(String name) {
+    public static Room getByName(String name) {
         for (Room r : getAll()) {
             if (r.getName().equals(name)) {
                 return r;
