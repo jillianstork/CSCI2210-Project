@@ -20,6 +20,7 @@ public class DataPersistence {
         saveReservations();
         saveSchedules();
         saveVenues();
+        saveConferences();
     }
 
     //  LOAD ALL
@@ -29,6 +30,7 @@ public class DataPersistence {
         loadSpeakers();
         loadAttendees();
         loadOrganizers();
+        loadConferences();
         loadReservations();
         loadSchedules(); 
     }
@@ -366,6 +368,50 @@ public class DataPersistence {
 
         } catch (Exception e) {
             System.out.println("Error loading schedules:");
+            e.printStackTrace();
+        }
+    }
+    
+    // CONFERENCES
+    private static void saveConferences() {
+        try (PrintWriter pw = new PrintWriter("conferences.txt")) {
+
+            for (Conference c : ConferenceManager.getAll()) {
+                pw.println(
+                    c.getTitle() + "|" +
+                    c.getStartDate() + "|" +
+                    c.getEndDate() + "|" +
+                    c.getTopic()
+                );
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error saving conferences:");
+            e.printStackTrace();
+        }
+    }
+
+    private static void loadConferences() {
+        File file = new File("conferences.txt");
+        if (!file.exists()) return;
+
+        try (Scanner sc = new Scanner(file)) {
+
+            while (sc.hasNextLine()) {
+                String[] p = sc.nextLine().split("\\|");
+                
+                if (p.length < 4) continue;
+                
+                ConferenceManager.addConference(
+                    p[0],
+                    p[1],
+                    p[2],
+                    p[3]
+                );
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error loading conferences:");
             e.printStackTrace();
         }
     }
