@@ -214,7 +214,19 @@ public class RoomManager {
         }
         return null;
     }
- public static ArrayList<Room> getAll() {
-    return rooms;
-}
+    
+    
+public static Room getByName(String name) {
+        for (Room r : getAll()) {
+            if (r.getName().equals(name)) {
+                return r;
+            }
+        }
+        return null;
+    }
+
+    
+    public static ArrayList<Room> getAll() {
+        return rooms;
+    }
 }
