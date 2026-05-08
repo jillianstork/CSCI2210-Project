@@ -62,7 +62,7 @@ public class DataPersistence {
         try (Scanner sc = new Scanner(file)) {
 
             while (sc.hasNextLine()) {
-                String[] p = sc.nextLine().split(",");
+                String[] p = sc.nextLine().split("\\|");
 
                 if (p.length < 4) continue;
 
@@ -113,7 +113,7 @@ public class DataPersistence {
         try (Scanner sc = new Scanner(file)) {
 
             while (sc.hasNextLine()) {
-                String[] p = sc.nextLine().split(",");
+                String[] p = sc.nextLine().split("\\|");
 
                 if (p.length < 7) continue;
 
@@ -166,7 +166,7 @@ public class DataPersistence {
         try (Scanner sc = new Scanner(file)) {
 
             while (sc.hasNextLine()) {
-                String[] p = sc.nextLine().split(",");
+                String[] p = sc.nextLine().split("\\|");
 
                 if (p.length < 7) continue;
 
@@ -216,7 +216,7 @@ public class DataPersistence {
         try (Scanner sc = new Scanner(file)) {
 
             while (sc.hasNextLine()) {
-                String[] p = sc.nextLine().split(",");
+                String[] p = sc.nextLine().split("\\|");
 
                 if (p.length < 7) continue;
 
@@ -262,7 +262,7 @@ public class DataPersistence {
         try (Scanner sc = new Scanner(file)) {
 
             while (sc.hasNextLine()) {
-                String[] p = sc.nextLine().split(",");
+                String[] p = sc.nextLine().split("\\|");
 
                 if (p.length < 2) continue;
 
@@ -304,7 +304,7 @@ public class DataPersistence {
         try (Scanner sc = new Scanner(file)) {
 
             while (sc.hasNextLine()) {
-                String[] p = sc.nextLine().split(",");
+                String[] p = sc.nextLine().split("\\|");
 
                 if (p.length < 3) continue;
 
@@ -346,7 +346,7 @@ public class DataPersistence {
         try (Scanner sc = new Scanner(file)) {
 
             while (sc.hasNextLine()) {
-                String[] p = sc.nextLine().split(",");
+                String[] p = sc.nextLine().split("\\|");
 
                 if (p.length < 1) continue;
 
