@@ -261,11 +261,11 @@ public class DataPersistence {
                 if (p.length < 5) continue;
 
                 RoomManager.addRoom(
-                    p[0],
-                    Integer.parseInt(p[1]),
+                    p[0].trim(),
+                    Integer.parseInt(p[1].trim()),
                     null,
-                    Boolean.parseBoolean(p[3]),
-                    Integer.parseInt(p[4])
+                    Boolean.parseBoolean(p[3].trim()),
+                    Integer.parseInt(p[4].trim())
                 );
             }
 
