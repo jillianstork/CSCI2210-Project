@@ -1,23 +1,20 @@
-
 /**
  * @author Jillian Stork
  * CSCI 2210 Project
  * Conference Management System
- * Venue Panel Class
+ * VenuePanel Class
  * This is the class for the Venue GUI
  */
 
 import javax.swing.*;
 
-/**
- * GUI panel for managing Venue objects (CRUD + search).
- */
 public class VenuePanel extends BasePanel {
 
-    public VenuePanel() {
+    public VenuePanel(){
         super(new String[]{"ID", "Name"});
     }
 
+    // pulls all venues into the table
     @Override
     protected void refreshTable() {
         tableModel.setRowCount(0);
@@ -30,48 +27,44 @@ public class VenuePanel extends BasePanel {
         }
     }
 
+    // search by venue name or ID
     @Override
-    protected void doSearch() {  
-        
+    protected void doSearch(String q) {
+
         if (VenueManager.getAll().isEmpty()) {
             JOptionPane.showMessageDialog(
                 this,
                 "There are no venues to search for.",
-                "No Venues in Catalog",
-                JOptionPane.WARNING_MESSAGE   
+                "No Venues Found",
+                JOptionPane.WARNING_MESSAGE
             );
             return;
         }
-        
-        JTextField idSearchF = new JTextField();
-        JTextField generalSearchF = new JTextField();
-        
+
+        JTextField generalSearchF = new JTextField(q);
+        JTextField idSearchF = new  JTextField();
+
         int res = JOptionPane.showConfirmDialog(
             this,
-            new Object[] {
+            new Object[]{
                 "General Search:", generalSearchF,
                 "Search by ID:", idSearchF
             },
             "Search Venues",
             JOptionPane.OK_CANCEL_OPTION
         );
-        
-        if (res != JOptionPane.OK_OPTION) {
-            return;
-        }
-        
-        tableModel.setRowCount(0);
-        
+
+        if (res != JOptionPane.OK_OPTION) return;
+
         String s = generalSearchF.getText().trim().toLowerCase();
-        
         String idResult = idSearchF.getText().trim();
         Integer id = null;
+
         try {
             if (!idResult.isEmpty()) {
                 id = Integer.valueOf(idResult);
             }
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(
                 this,
                 "ID must be a number.",
@@ -80,7 +73,7 @@ public class VenuePanel extends BasePanel {
             );
             return;
         }
-        
+
         if (s.isEmpty() && idResult.isEmpty()) {
             JOptionPane.showMessageDialog(
                 this,
@@ -90,12 +83,13 @@ public class VenuePanel extends BasePanel {
             );
             return;
         }
-        
+
+        tableModel.setRowCount(0);
+
         for (Venue v : VenueManager.getAll()) {
             boolean matchesGeneral = v.getName().toLowerCase().contains(s);
-            
             boolean matchesId = (id == null || id == v.getVenueId());
-            
+
             if (matchesGeneral && matchesId) {
                 tableModel.addRow(new Object[]{
                     v.getVenueId(),
@@ -103,7 +97,7 @@ public class VenuePanel extends BasePanel {
                 });
             }
         }
-        
+
         if (tableModel.getRowCount() == 0) {
             JOptionPane.showMessageDialog(
                 this,
@@ -125,8 +119,9 @@ public class VenuePanel extends BasePanel {
             JOptionPane.OK_CANCEL_OPTION
         );
 
-        if (res == JOptionPane.OK_OPTION && !nameF.getText().trim().isEmpty()) {
+        if  (res == JOptionPane.OK_OPTION && !nameF.getText().trim().isEmpty()) {
             VenueManager.addVenue(nameF.getText().trim());
+            DataPersistence.saveAll();
             refreshTable();
         }
     }
@@ -154,6 +149,7 @@ public class VenuePanel extends BasePanel {
 
         if (res == JOptionPane.OK_OPTION) {
             v.setName(nameF.getText().trim());
+            DataPersistence.saveAll();
             refreshTable();
         }
     }
@@ -180,7 +176,7 @@ public class VenuePanel extends BasePanel {
             if (v != null) {
                 VenueManager.getAll().remove(v);
             }
-
+            DataPersistence.saveAll();
             refreshTable();
         }
     }
