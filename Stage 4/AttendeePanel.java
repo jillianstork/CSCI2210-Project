@@ -2,7 +2,7 @@
  * @author Jillian Stork
  * CSCI 2210 Project
  * Conference Management System
- * attendee Panel Class
+ * AttendeePanel Class
  * This is the class for the attendee GUI
  */
 
@@ -14,7 +14,7 @@ public class AttendeePanel extends BasePanel {
         super(new String[]{"ID","Name","Email","Phone","Org","Job"});
     }
 
-    // READ
+    //read
     @Override
     protected void refreshTable() {
         tableModel.setRowCount(0);
@@ -33,9 +33,9 @@ public class AttendeePanel extends BasePanel {
 
     // SEARCH
     @Override
-    protected void doSearch() {
-        
-        if(SpeakerManager.getAll().isEmpty()) {
+    protected void doSearch(String q) {
+
+        if (AttendeeManager.getAll().isEmpty()) {
             JOptionPane.showMessageDialog(
                 this,
                 "There are no attendees to search for.",
@@ -44,36 +44,31 @@ public class AttendeePanel extends BasePanel {
             );
             return;
         }
-        
-        JTextField generalSearchF = new JTextField();
+
+        JTextField generalSearchF = new JTextField(q);
         JTextField idSearchF = new JTextField();
-        
+
         int res = JOptionPane.showConfirmDialog(
             this,
-            new Object[] {
+            new Object[]{
                 "General Search:", generalSearchF,
                 "Search by ID:", idSearchF
             },
             "Search Attendees",
             JOptionPane.OK_CANCEL_OPTION
         );
-        
-        if (res != JOptionPane.OK_OPTION) {
-            return;
-        }
-        
-        tableModel.setRowCount(0);
-        
+
+        if (res != JOptionPane.OK_OPTION) return;
+
         String s = generalSearchF.getText().trim().toLowerCase();
-        
         String idResult = idSearchF.getText().trim();
         Integer id = null;
+
         try {
             if (!idResult.isEmpty()) {
                 id = Integer.valueOf(idResult);
             }
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(
                 this,
                 "ID must be a number.",
@@ -82,7 +77,7 @@ public class AttendeePanel extends BasePanel {
             );
             return;
         }
-        
+
         if (s.isEmpty() && idResult.isEmpty()) {
             JOptionPane.showMessageDialog(
                 this,
@@ -93,14 +88,15 @@ public class AttendeePanel extends BasePanel {
             return;
         }
 
+        tableModel.setRowCount(0);
+
         for (Attendee x : AttendeeManager.getAll()) {
-            
             boolean matchesGeneral = x.getName().toLowerCase().contains(s)
                 || x.getEmail().toLowerCase().contains(s)
                 || x.getOrganization().toLowerCase().contains(s);
-            
+
             boolean matchesId = (id == null || x.getAttendeeID() == id);
-            
+
             if (matchesGeneral && matchesId) {
                 tableModel.addRow(new Object[]{
                     x.getAttendeeID(),
@@ -112,7 +108,7 @@ public class AttendeePanel extends BasePanel {
                 });
             }
         }
-        
+
         if (tableModel.getRowCount() == 0) {
             JOptionPane.showMessageDialog(
                 this,
@@ -123,7 +119,7 @@ public class AttendeePanel extends BasePanel {
         }
     }
 
-    // CREATE (FIXED)
+    //create
     @Override
     protected void doAdd() {
 
@@ -153,11 +149,12 @@ public class AttendeePanel extends BasePanel {
                 form.jobF.getText().trim()
             );
 
+            DataPersistence.saveAll();
             refreshTable();
         }
     }
 
-    // UPDATE
+    //update
     @Override
     protected void doEdit() {
 
@@ -194,11 +191,12 @@ public class AttendeePanel extends BasePanel {
             a.setOrganization(form.orgF.getText().trim());
             a.setJobTitle(form.jobF.getText().trim());
 
+            DataPersistence.saveAll();
             refreshTable();
         }
     }
 
-    // DELETE
+    //delete
     @Override
     protected void doDelete() {
 
@@ -222,6 +220,7 @@ public class AttendeePanel extends BasePanel {
             if (a != null) {
                 AttendeeManager.getAll().remove(a);
             }
+            DataPersistence.saveAll();
             refreshTable();
         }
     }
