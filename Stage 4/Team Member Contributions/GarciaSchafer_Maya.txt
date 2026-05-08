@@ -1,7 +1,7 @@
 Contributions:
 
-Add catalogs/search
-Edit gui panels
-Add relevant information and functions to gui classes/logic classes
-update uml
-create readme
+- Add catalogs/search
+- Edit gui panels, add relevant information and functions to GUI and logic classes
+- Update uml
+- Create readme
+
