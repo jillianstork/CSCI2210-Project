@@ -29,7 +29,7 @@ public class VenuePanel extends BasePanel {
 
     // search by venue name or ID
     @Override
-    protected void doSearch(String q) {
+    protected void doSearch() {
 
         if (VenueManager.getAll().isEmpty()) {
             JOptionPane.showMessageDialog(
@@ -41,7 +41,7 @@ public class VenuePanel extends BasePanel {
             return;
         }
 
-        JTextField generalSearchF = new JTextField(q);
+        JTextField generalSearchF = new JTextField();
         JTextField idSearchF = new  JTextField();
 
         int res = JOptionPane.showConfirmDialog(
