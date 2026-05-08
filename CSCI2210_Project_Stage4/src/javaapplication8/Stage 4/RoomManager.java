@@ -218,7 +218,7 @@ public class RoomManager {
     
     public static Room getByName(String name) {
         for (Room r : getAll()) {
-            if (r.getName().equals(name)) {
+            if (r.getName().trim().equalsIgnoreCase(name.trim())) {
                 return r;
             }
         }
