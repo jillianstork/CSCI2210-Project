@@ -20,7 +20,6 @@ public class DataPersistence {
         saveReservations();
         saveSchedules();
         saveVenues();
-        saveReports();
     }
 
     //  LOAD ALL
@@ -32,7 +31,6 @@ public class DataPersistence {
         loadReservations();
         loadSchedules();
         loadVenues();
-        loadReports();
     }
 
     
@@ -266,12 +264,12 @@ public class DataPersistence {
             while (sc.hasNextLine()) {
                 String[] p = sc.nextLine().split(",");
 
-                if (p.length < 3) continue;
+                if (p.length < 2) continue;
 
                 ReservationManager.addReservation(
                     null,
                     p[1],
-                    p[3]
+                    p[2]
                 );
             }
 
@@ -282,12 +280,84 @@ public class DataPersistence {
     }
     
     // SCHEDULES
-    
-    
+    private static void saveSchedules() {
+        try (PrintWriter pw = new PrintWriter("schedules.txt")) {
+
+            for (Schedule s : ScheduleManager.getAll()) {
+                pw.println(
+                    s.getDate() + "|" +
+                    s.getStartTime() + "|" +
+                    s.getEndTime()
+                );
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error saving reservations:");
+            e.printStackTrace();
+        }
+    }
+
+    private static void loadSchedules() {
+        File file = new File("schedules.txt");
+        if (!file.exists()) return;
+
+        try (Scanner sc = new Scanner(file)) {
+
+            while (sc.hasNextLine()) {
+                String[] p = sc.nextLine().split(",");
+
+                if (p.length < 3) continue;
+
+                ScheduleManager.addSchedule(
+                    null,
+                    null,
+                    p[0],
+                    p[1],
+                    p[2]
+                );
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error loading schedules:");
+            e.printStackTrace();
+        }
+    }
     
     // VENUES
-    
-    
-    // REPORTS
-    
+    private static void saveVenues() {
+        try (PrintWriter pw = new PrintWriter("venues.txt")) {
+
+            for (Venue v : VenueManager.getAll()) {
+                pw.println(
+                    v.getName()
+                );
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error saving venues:");
+            e.printStackTrace();
+        }
+    }
+
+    private static void loadVenues() {
+        File file = new File("venues.txt");
+        if (!file.exists()) return;
+
+        try (Scanner sc = new Scanner(file)) {
+
+            while (sc.hasNextLine()) {
+                String[] p = sc.nextLine().split(",");
+
+                if (p.length < 1) continue;
+
+                VenueManager.addVenue(
+                    p[0]
+                );
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error loading venues:");
+            e.printStackTrace();
+        }
+    }
 }
