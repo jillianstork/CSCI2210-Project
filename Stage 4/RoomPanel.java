@@ -2,12 +2,12 @@
  * @author Jillian Stork
  * CSCI 2210 Project
  * Conference Management System
- * Room Panel Class
- * This is the class for the room GUI
+ * RoomPanel Class
+ * This is the class for the Room GUI
  */
 
 import javax.swing.*;
-import java.util.*;
+import java.util.ArrayList;
 
 public class RoomPanel extends BasePanel {
 
@@ -16,9 +16,9 @@ public class RoomPanel extends BasePanel {
         refreshTable();
     }
 
-    // ---------------- READ ----------------
+    // pulls all rooms into the table
     @Override
-    protected void refreshTable() {
+    protected void refreshTable()  {
         tableModel.setRowCount(0);
 
         for (Room r : RoomManager.getAll()) {
@@ -33,49 +33,44 @@ public class RoomPanel extends BasePanel {
         }
     }
 
-    // ---------------- SEARCH  ----------------
+    // search by room name, venue, or ID
     @Override
-    protected void doSearch() {
-        
+    protected void doSearch(String q) {
+
         if (RoomManager.getAll().isEmpty()) {
             JOptionPane.showMessageDialog(
                 this,
                 "There are no rooms to search for.",
-                "No Rooms in Catalog",
-                JOptionPane.WARNING_MESSAGE   
+                "No Rooms Found",
+                JOptionPane.WARNING_MESSAGE
             );
             return;
         }
-        
+
+        JTextField generalSearchF = new JTextField(q);
         JTextField idSearchF = new JTextField();
-        JTextField generalSearchF = new JTextField();
-        
+
         int res = JOptionPane.showConfirmDialog(
             this,
-            new Object[] {
+            new Object[]{
                 "General Search:", generalSearchF,
                 "Search by ID:", idSearchF
             },
-            "Search Reservations",
+            "Search Rooms",
             JOptionPane.OK_CANCEL_OPTION
         );
-        
-        if (res != JOptionPane.OK_OPTION) {
-            return;
-        }
-        
-        tableModel.setRowCount(0);
-        
+
+        if (res != JOptionPane.OK_OPTION) return;
+
         String s = generalSearchF.getText().trim().toLowerCase();
-        
         String idResult = idSearchF.getText().trim();
         Integer id = null;
+
         try {
             if (!idResult.isEmpty()) {
                 id = Integer.valueOf(idResult);
             }
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(
                 this,
                 "ID must be a number.",
@@ -84,7 +79,7 @@ public class RoomPanel extends BasePanel {
             );
             return;
         }
-        
+
         if (s.isEmpty() && idResult.isEmpty()) {
             JOptionPane.showMessageDialog(
                 this,
@@ -95,17 +90,19 @@ public class RoomPanel extends BasePanel {
             return;
         }
 
+        tableModel.setRowCount(0);
+
         for (Room r : RoomManager.getAll()) {
             String venue = r.getLocation() != null ? r.getLocation().getName().toLowerCase() : "";
 
             boolean matchesGeneral = r.getName().toLowerCase().contains(s)
                 || venue.contains(s);
-            
+
             boolean matchesId = (id == null || r.getRoomId() == id);
-            
+
             if (matchesGeneral && matchesId) {
                 tableModel.addRow(new Object[]{
-                    r.getRoomId(),
+                    r.getRoomId() ,
                     r.getName(),
                     r.getCapacity(),
                     r.getLocation() != null ? r.getLocation().getName() : "?",
@@ -114,7 +111,7 @@ public class RoomPanel extends BasePanel {
                 });
             }
         }
-        
+
         if (tableModel.getRowCount() == 0) {
             JOptionPane.showMessageDialog(
                 this,
@@ -125,7 +122,7 @@ public class RoomPanel extends BasePanel {
         }
     }
 
-    // ---------------- CREATE ----------------
+    // pick a venue, set room details, and add the room
     @Override
     protected void doAdd() {
 
@@ -168,12 +165,12 @@ public class RoomPanel extends BasePanel {
                 Integer.parseInt(computersF.getText().trim())
             );
 
-
+            DataPersistence.saveAll();
             refreshTable();
         }
     }
 
-    // ---------------- UPDATE ----------------
+    // edit name, capacity, projector, and computer count
     @Override
     protected void doEdit() {
 
@@ -213,11 +210,11 @@ public class RoomPanel extends BasePanel {
             r.setNumberOfComputers(Integer.parseInt(computersF.getText().trim()));
             r.setHasProjector(projectorBox.isSelected());
 
+            DataPersistence.saveAll();
             refreshTable();
         }
     }
 
-    // ---------------- DELETE ----------------
     @Override
     protected void doDelete() {
 
@@ -243,7 +240,7 @@ public class RoomPanel extends BasePanel {
                 RoomManager.getAll().remove(r);
             }
 
-            
+            DataPersistence.saveAll();
             refreshTable();
         }
     }
