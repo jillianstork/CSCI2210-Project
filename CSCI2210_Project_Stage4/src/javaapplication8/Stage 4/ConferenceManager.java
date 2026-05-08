@@ -177,7 +177,19 @@ public class ConferenceManager {
         }
         return null;
     }
+    
+    
+    public static Conference getByTitle(String title) {
+        for (Conference c : getAll()) {
+            if (c.getTitle().equals(title)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    
     public static ArrayList<Conference> getAll() {
-    return conferences;
-}
+        return conferences;
+    }
 }
