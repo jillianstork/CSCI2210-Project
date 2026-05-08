@@ -2,22 +2,21 @@
  * @author Jillian Stork
  * CSCI 2210 Project
  * Conference Management System
- * Schedule Panel Class
- * This is the class for the schedule GUI
+ * SchedulePanel Class
+ * This is the class for the Schedule GUI
  */
-import javax.swing.*;
-import java.util.*;
 
-/**
- * GUI panel for managing Schedule objects (CRUD + search).
- */
+import javax.swing.*;
+import java.util.ArrayList;
+
 public class SchedulePanel extends BasePanel {
 
     public SchedulePanel() {
-        super(new String[]{"ID","Conference","Room","Date","Start","End"});
+        super(new String[]{"ID", "Conference", "Room", "Date", "Start", "End"});
         refreshTable();
     }
 
+    // pulls all schedules into the table
     @Override
     protected void refreshTable() {
         tableModel.setRowCount(0);
@@ -33,54 +32,49 @@ public class SchedulePanel extends BasePanel {
             });
         }
 
-        // Optional but harmless:
         tableModel.fireTableDataChanged();
         revalidate();
         repaint();
     }
 
+    // search by conference, room, date, or ID
     @Override
-    protected void doSearch() {
-        
-        if(ScheduleManager.getAll().isEmpty()) {
+    protected void doSearch(String q) {
+
+        if (ScheduleManager.getAll().isEmpty()) {
             JOptionPane.showMessageDialog(
                 this,
                 "There are no schedules to search for.",
-                "No Schedules in Catalog",
+                "No Schedules Found",
                 JOptionPane.WARNING_MESSAGE
             );
             return;
         }
-        
+
+        JTextField generalSearchF = new JTextField(q);
         JTextField idSearchF = new JTextField();
-        JTextField generalSearchF = new JTextField();
-        
+
         int res = JOptionPane.showConfirmDialog(
             this,
-            new Object[] {
+            new Object[]{
                 "General Search:", generalSearchF,
                 "Search by ID:", idSearchF
             },
             "Search Schedules",
             JOptionPane.OK_CANCEL_OPTION
         );
-        
-        if (res != JOptionPane.OK_OPTION) {
-            return;
-        }
-        
-        tableModel.setRowCount(0);
-        
+
+        if (res != JOptionPane.OK_OPTION) return;
+
         String s = generalSearchF.getText().trim().toLowerCase();
-        
         String idResult = idSearchF.getText().trim();
         Integer id = null;
+
         try {
             if (!idResult.isEmpty()) {
                 id = Integer.valueOf(idResult);
             }
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(
                 this,
                 "ID must be a number.",
@@ -89,7 +83,7 @@ public class SchedulePanel extends BasePanel {
             );
             return;
         }
-        
+
         if (s.isEmpty() && idResult.isEmpty()) {
             JOptionPane.showMessageDialog(
                 this,
@@ -100,22 +94,18 @@ public class SchedulePanel extends BasePanel {
             return;
         }
 
+        tableModel.setRowCount(0);
+
         for (Schedule x : ScheduleManager.getAll()) {
+            String conf = x.getConference() != null ? x.getConference().getTitle().toLowerCase() : "";
+            String room = x.getRoom() != null ? x.getRoom().getName().toLowerCase() : "";
 
-            String conf = x.getConference() != null
-                    ? x.getConference().getTitle().toLowerCase()
-                    : "";
-
-            String room = x.getRoom() != null
-                    ? x.getRoom().getName().toLowerCase()
-                    : "";
-            
             boolean matchesGeneral = conf.contains(s)
-                    || room.contains(s)
-                    || x.getDate().toLowerCase().contains(s);
-            
+                || room.contains(s)
+                || x.getDate().toLowerCase().contains(s);
+
             boolean matchesId = (id == null || x.getScheduleId() == id);
-            
+
             if (matchesGeneral && matchesId) {
                 tableModel.addRow(new Object[]{
                     x.getScheduleId(),
@@ -127,7 +117,7 @@ public class SchedulePanel extends BasePanel {
                 });
             }
         }
-        
+
         if (tableModel.getRowCount() == 0) {
             JOptionPane.showMessageDialog(
                 this,
@@ -138,13 +128,14 @@ public class SchedulePanel extends BasePanel {
         }
     }
 
+    // pick a conference and room, set the date and times
     @Override
     protected void doAdd() {
         ArrayList<Room> rooms = RoomManager.getAll();
         ArrayList<Conference> conferences = ConferenceManager.getAll();
 
         if (rooms.isEmpty() || conferences.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Need rooms and conferences.");
+            JOptionPane.showMessageDialog(this, "Need at least one room and one conference first.");
             return;
         }
 
@@ -173,24 +164,26 @@ public class SchedulePanel extends BasePanel {
         if (JOptionPane.showConfirmDialog(
                 this, fields,
                 "Add Schedule",
-                JOptionPane.OK_CANCEL_OPTION
-        ) == JOptionPane.OK_OPTION) {
+                JOptionPane.OK_CANCEL_OPTION)
+                == JOptionPane.OK_OPTION) {
 
             Room room = rooms.get(roomBox.getSelectedIndex());
             Conference conf = conferences.get(confBox.getSelectedIndex());
 
             ScheduleManager.addSchedule(
-                    room,
-                    conf,
-                    dateF.getText().trim(),
-                    startF.getText().trim(),
-                    endF.getText().trim()
+                room,
+                conf,
+                dateF.getText().trim(),
+                startF.getText().trim(),
+                endF.getText().trim()
             );
 
+            DataPersistence.saveAll();
             refreshTable();
         }
     }
 
+    // edit the date and time window for an existing schedule
     @Override
     protected void doEdit() {
         int row = getSelectedRow();
@@ -202,7 +195,6 @@ public class SchedulePanel extends BasePanel {
 
         int id = (int) tableModel.getValueAt(row, 0);
         Schedule s = ScheduleManager.getScheduleByID(id);
-
         if (s == null) return;
 
         JTextField dateF = new JTextField(s.getDate());
@@ -218,13 +210,14 @@ public class SchedulePanel extends BasePanel {
         if (JOptionPane.showConfirmDialog(
                 this, fields,
                 "Edit Schedule",
-                JOptionPane.OK_CANCEL_OPTION
-        ) == JOptionPane.OK_OPTION) {
+                JOptionPane.OK_CANCEL_OPTION)
+                == JOptionPane.OK_OPTION) {
 
             s.setDate(dateF.getText().trim());
             s.setStartTime(startF.getText().trim());
             s.setEndTime(endF.getText().trim());
 
+            DataPersistence.saveAll();
             refreshTable();
         }
     }
@@ -244,24 +237,16 @@ public class SchedulePanel extends BasePanel {
                 this,
                 "Delete schedule ID " + id + "?",
                 "Confirm",
-                JOptionPane.YES_NO_OPTION
-        ) == JOptionPane.YES_OPTION) {
+                JOptionPane.YES_NO_OPTION)
+                == JOptionPane.YES_OPTION) {
 
             Schedule s = ScheduleManager.getScheduleByID(id);
-
             if (s != null) {
                 ScheduleManager.getAll().remove(s);
             }
 
+            DataPersistence.saveAll();
             refreshTable();
         }
-    
-        
-    JButton quitButton = new JButton("Quit");
-
-    quitButton.addActionListener(e -> {
-    System.exit(0);
-        });
     }
-    
 }
